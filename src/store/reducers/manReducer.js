@@ -1,5 +1,6 @@
 
-const CHANGE_WORK = "CHANGE_WORK"
+export const CHANGE_WORK = "CHANGE_WORK";
+export const CHANGE_NAME = "CHANGE_NAME";
 
 const initialState = {
 	workers: [
@@ -27,21 +28,20 @@ const initialState = {
 
 export const manReducer = (state = initialState, actions) => {
 	switch (actions.type) {
+		case CHANGE_NAME: {
+			const workers = state.workers;
+			const num = actions.payload.number;
+			workers[num].name = actions.payload.name;
+			return {...state, workers }
+		}
+
 		case CHANGE_WORK: {
 			const workers = state.workers;
 			const num = actions.payload.number;
 			const work = workers[num].work;
 			work.company = actions.payload.company;
-			return { ...state, workers};
+			return { ...state, workers };
 		}
 		default: return state;
 	}
 }
-
-export const ChangeWorkAction = (newWork, index) => ({
-	type: CHANGE_WORK,
-	payload: {
-		company: newWork,
-		number: index
-	}
-});
